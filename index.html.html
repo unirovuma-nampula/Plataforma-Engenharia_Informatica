@@ -1,0 +1,2430 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cadastro — Turma 2 de Engenharia Informática 2026 · UniRovuma</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #eef3f9;
+      --surface: #ffffff;
+      --card: #ffffff;
+      --border: #cdd9e6;
+      --accent: #3b7dd8;
+      --accent-hover: #2b5fa0;
+      --accent-light: rgba(59, 125, 216, 0.08);
+      --accent-glow: rgba(59, 125, 216, 0.25);
+      --blue-dark: #0f2b4f;
+      --blue-mid: #1a4b7a;
+      --blue-soft: #5b9bd5;
+      --green: #2ea043;
+      --yellow: #d4a017;
+      --gold: #c8950b;
+      --text: #1a1f2e;
+      --muted: #5f6b7a;
+      --muted-light: #8893a4;
+      --radius: 14px;
+      --shadow-sm: 0 2px 8px rgba(15, 43, 79, 0.06);
+      --shadow: 0 8px 32px rgba(15, 43, 79, 0.1);
+      --shadow-lg: 0 16px 48px rgba(15, 43, 79, 0.14);
+      --bg-pattern: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='1.2' fill='%233b7dd8' opacity='0.07'/%3E%3C/svg%3E");
+    }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      background-image: var(--bg-pattern);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ─── DECORATIVE FLOATING SHAPES ─── */
+    .bg-decoration {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.04;
+    }
+    .bg-decoration.circle-1 {
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: var(--blue-soft);
+      top: -80px;
+      right: -60px;
+    }
+    .bg-decoration.circle-2 {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: var(--accent);
+      bottom: 10%;
+      left: -70px;
+    }
+    .bg-decoration.square-1 {
+      width: 160px;
+      height: 160px;
+      background: var(--blue-mid);
+      border-radius: 30px;
+      transform: rotate(25deg);
+      top: 50%;
+      right: -40px;
+    }
+
+    /* ─── HEADER ─── */
+    .site-header {
+      background: linear-gradient(160deg, #0f2b4f 0%, #15355e 30%, #1a4b7a 60%, #1d5588 100%);
+      padding: 3rem 1.5rem 2.4rem;
+      text-align: center;
+      border-bottom: 4px solid var(--accent);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .site-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 80%, rgba(91, 155, 213, 0.22) 0%, transparent 55%),
+        radial-gradient(ellipse at 75% 20%, rgba(255, 255, 255, 0.06) 0%, transparent 50%),
+        repeating-linear-gradient(45deg, transparent, transparent 50px, rgba(255, 255, 255, 0.015) 50px, rgba(255, 255, 255, 0.015) 100px);
+      z-index: 0;
+    }
+    .site-header::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--accent), var(--blue-soft), var(--gold), var(--blue-soft), var(--accent));
+      z-index: 2;
+      animation: shimmerBar 4s ease-in-out infinite;
+      background-size: 200% 100%;
+    }
+    @keyframes shimmerBar {
+      0%,
+      100% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+    }
+    .site-header .logo-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 0.6rem;
+      position: relative;
+      z-index: 3;
+    }
+    .site-header .logo-icon {
+      font-size: 3.2rem;
+      animation: float 3.2s ease-in-out infinite;
+      filter: drop-shadow(0 6px 18px rgba(91, 155, 213, 0.4));
+      display: inline-block;
+    }
+    .site-header .logo-icon.secondary {
+      font-size: 2.6rem;
+      animation-delay: 1s;
+    }
+    @keyframes float {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-9px);
+      }
+    }
+    .site-header h1 {
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: #fff;
+      position: relative;
+      z-index: 3;
+      letter-spacing: -0.01em;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    }
+    .site-header .subtitle {
+      color: #b8d4f0;
+      margin-top: 0.45rem;
+      font-size: 0.9rem;
+      position: relative;
+      z-index: 3;
+    }
+    .site-header .badge-ur {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 24px;
+      padding: 0.3rem 1rem;
+      font-size: 0.74rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-top: 0.7rem;
+      position: relative;
+      z-index: 3;
+      backdrop-filter: blur(4px);
+    }
+    .header-illustration {
+      position: absolute;
+      right: 8%;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 5.5rem;
+      opacity: 0.08;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* ─── LAYOUT ─── */
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2rem 1rem 5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ─── PROGRESS BAR ─── */
+    .progress-container {
+      margin-bottom: 1.4rem;
+    }
+    .progress-track {
+      height: 6px;
+      background: var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--blue-soft), #7ab8f0);
+      border-radius: 6px;
+      transition: width .45s cubic-bezier(.4, 0, .2, 1);
+      width: 25%;
+      background-size: 200% 100%;
+      animation: progressShimmer 3s ease-in-out infinite;
+    }
+    @keyframes progressShimmer {
+      0%,
+      100% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+    }
+    .progress-steps {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.6rem;
+    }
+    .progress-step-label {
+      font-size: 0.7rem;
+      color: var(--muted-light);
+      transition: color .25s;
+      font-weight: 500;
+    }
+    .progress-step-label.active {
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .progress-step-label.done {
+      color: var(--green);
+    }
+
+    /* ─── TAB CARD ─── */
+    .tab-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    /* ─── TAB NAV ─── */
+    .tab-nav {
+      display: flex;
+      background: #f6f9fc;
+      border-bottom: 1px solid var(--border);
+    }
+    .tab-btn {
+      flex: 1;
+      padding: .85rem .5rem;
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      color: var(--muted-light);
+      font-size: .82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .28rem;
+    }
+    .tab-btn .tab-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #dfe6ef;
+      color: var(--muted-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .8rem;
+      font-weight: 700;
+      transition: all .25s;
+      flex-shrink: 0;
+    }
+    .tab-btn .tab-lbl {
+      font-size: .72rem;
+    }
+    .tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .tab-btn.active .tab-num {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 18px var(--accent-glow);
+    }
+    .tab-btn.done {
+      color: var(--green);
+    }
+    .tab-btn.done .tab-num {
+      background: var(--green);
+      color: #fff;
+    }
+    .tab-btn:disabled {
+      opacity: .35;
+      cursor: not-allowed;
+    }
+    .tab-divider {
+      width: 1px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    /* ─── TAB PANELS ─── */
+    .tab-panel {
+      padding: 2rem;
+      display: none;
+    }
+    .tab-panel.active {
+      display: block;
+      animation: panelIn .3s ease;
+    }
+    @keyframes panelIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .panel-title {
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: var(--blue-dark);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .panel-illustration {
+      text-align: center;
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+      opacity: 0.7;
+    }
+
+    /* ─── FORM ─── */
+    .form-row {
+      margin-bottom: 1.15rem;
+    }
+    .field-label {
+      display: block;
+      font-size: .83rem;
+      color: var(--muted);
+      margin-bottom: .4rem;
+      font-weight: 500;
+    }
+    .field-label .req {
+      color: #d9444a;
+      margin-left: 2px;
+    }
+    .field-label .opt {
+      color: #a0aab4;
+      font-size: .74rem;
+      margin-left: 4px;
+    }
+    input[type=text],
+    input[type=tel],
+    input[type=email],
+    input[type=password] {
+      width: 100%;
+      padding: .72rem 1rem;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: .93rem;
+      transition: border-color .2s, box-shadow .2s, background .2s;
+      font-family: inherit;
+    }
+    input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+      background: #fff;
+    }
+    input.field-valid {
+      border-color: var(--green);
+      box-shadow: 0 0 0 2px rgba(46, 160, 67, .1);
+    }
+    input.field-error {
+      border-color: #d9444a;
+    }
+    input::placeholder {
+      color: #b0bcc8;
+    }
+    .err-msg {
+      font-size: .77rem;
+      color: #d9444a;
+      margin-top: .3rem;
+      display: none;
+      animation: shake .3s ease;
+    }
+    .err-msg.show {
+      display: block;
+    }
+    @keyframes shake {
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+      25% {
+        transform: translateX(-4px);
+      }
+      75% {
+        transform: translateX(4px);
+      }
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media(max-width:520px) {
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ─── ALERTS ─── */
+    .alert {
+      padding: .8rem 1rem;
+      border-radius: 8px;
+      font-size: .85rem;
+      margin-top: .8rem;
+      display: none;
+    }
+    .alert.show {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .alert-danger {
+      background: #fef2f2;
+      border: 1px solid #f5c6cb;
+      color: #b33a3a;
+    }
+    .alert-info {
+      background: #eaf4fd;
+      border: 1px solid #b8d8f0;
+      color: #2b5fa0;
+    }
+
+    /* ─── SUBJECTS ─── */
+    .subjects-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: .8rem;
+    }
+    .subjects-counter {
+      background: var(--accent-light);
+      border: 1px solid rgba(59, 125, 216, .25);
+      color: var(--accent);
+      border-radius: 20px;
+      padding: .22rem .8rem;
+      font-size: .78rem;
+      font-weight: 700;
+      transition: all .2s;
+    }
+    .subjects-counter.all {
+      background: rgba(46, 160, 67, .1);
+      border-color: rgba(46, 160, 67, .3);
+      color: var(--green);
+    }
+    .link-btn {
+      background: none;
+      border: none;
+      color: var(--accent);
+      font-size: .8rem;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .link-btn:hover {
+      text-decoration: underline;
+    }
+    .subject-list {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+    .subject-row {
+      display: flex;
+      align-items: center;
+      gap: .85rem;
+      padding: .82rem 1rem;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      user-select: none;
+      transition: border-color .2s, background .2s, transform .15s, box-shadow .2s;
+    }
+    .subject-row:hover {
+      border-color: #a0bcd0;
+      background: #eef5fb;
+      transform: translateX(3px);
+    }
+    .subject-row.checked {
+      border-color: var(--accent);
+      background: #e8f1fc;
+      box-shadow: 0 2px 14px var(--accent-glow);
+    }
+    .subject-row input[type=checkbox] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .subject-name {
+      flex: 1;
+      font-size: .86rem;
+      line-height: 1.3;
+    }
+    .subject-code {
+      background: var(--accent);
+      color: #fff;
+      padding: .2rem .55rem;
+      border-radius: 20px;
+      font-size: .7rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      transition: transform .2s;
+    }
+    .subject-row.checked .subject-code {
+      transform: scale(1.1);
+    }
+
+    /* ─── YEAR CARDS ─── */
+    .year-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: .5rem;
+    }
+    .year-card {
+      padding: 1.7rem 1rem;
+      background: #f8fafc;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: all .2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .year-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(59, 125, 216, .12), transparent);
+      opacity: 0;
+      transition: opacity .2s;
+    }
+    .year-card:hover {
+      border-color: #a0bcd0;
+      background: #eef5fb;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(15, 43, 79, .12);
+    }
+    .year-card.picked {
+      border-color: var(--accent);
+      background: #e8f1fc;
+      color: var(--blue-dark);
+      box-shadow: 0 4px 22px var(--accent-glow);
+    }
+    .year-card.picked::after {
+      opacity: 1;
+    }
+
+    /* ─── CONFIRM SUMMARY ─── */
+    .confirm-summary {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+    .confirm-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: .78rem 1.1rem;
+      border-bottom: 1px solid #e8edf2;
+    }
+    .confirm-row:last-child {
+      border-bottom: none;
+    }
+    .confirm-label {
+      font-size: .74rem;
+      color: var(--muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      min-width: 120px;
+      flex-shrink: 0;
+      padding-top: .12rem;
+    }
+    .confirm-value {
+      font-size: .88rem;
+      color: var(--text);
+      flex: 1;
+    }
+
+    /* ─── BUTTONS ─── */
+    .btn-row {
+      display: flex;
+      gap: .8rem;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.8rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--border);
+    }
+    .btn-row-right {
+      justify-content: flex-end;
+    }
+    .btn {
+      padding: .72rem 1.6rem;
+      border: none;
+      border-radius: 8px;
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-family: inherit;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px var(--accent-glow);
+    }
+    .btn-ghost {
+      background: #f6f9fc;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover {
+      background: #e8edf4;
+      color: var(--text);
+    }
+    .btn-green {
+      background: var(--green);
+      color: #fff;
+    }
+    .btn-green:hover {
+      background: #218838;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(46, 160, 67, .35);
+    }
+    .btn-blue {
+      background: #e8f1fc;
+      color: var(--accent);
+      border: 1px solid #b8d4f0;
+    }
+    .btn-blue:hover {
+      background: #d0e4f8;
+      color: var(--accent-hover);
+    }
+    .btn-sm {
+      padding: .38rem .8rem;
+      font-size: .78rem;
+      border-radius: 6px;
+    }
+    .btn-danger-sm {
+      background: #fef2f2;
+      color: #b33a3a;
+      border: 1px solid #f5c6cb;
+    }
+    .btn-danger-sm:hover {
+      background: #fde8e8;
+    }
+    .btn:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    /* ─── SPINNER ─── */
+    .spinner {
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      border: 2px solid rgba(255, 255, 255, .3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* ─── SUCCESS ─── */
+    .success-wrap {
+      text-align: center;
+      padding: 1rem 1rem 1.5rem;
+    }
+    .success-icon {
+      font-size: 5rem;
+      display: inline-block;
+      animation: pop .5s cubic-bezier(.17, .67, .3, 1.3);
+    }
+    @keyframes pop {
+      from {
+        transform: scale(0);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+    .success-wrap h2 {
+      font-size: 1.7rem;
+      color: #2ea043;
+      margin: .8rem 0 .5rem;
+      font-weight: 800;
+    }
+    .success-wrap p {
+      color: var(--muted);
+      font-size: .9rem;
+    }
+    .motto {
+      margin: 1.8rem 0 1.5rem;
+      padding: 1.1rem 1.4rem;
+      border-left: 4px solid var(--accent);
+      background: var(--accent-light);
+      border-radius: 0 10px 10px 0;
+      text-align: left;
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--accent);
+      font-weight: 600;
+      line-height: 1.5;
+    }
+    .success-illustrations {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      font-size: 3rem;
+      margin: 1rem 0;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    /* ─── TOAST ─── */
+    #toastContainer {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column-reverse;
+      gap: .5rem;
+      z-index: 10000;
+      pointer-events: none;
+      align-items: center;
+    }
+    .toast {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: .78rem 1.2rem;
+      font-size: .87rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      min-width: 240px;
+      max-width: 400px;
+      box-shadow: var(--shadow-lg);
+      animation: toastIn .3s ease;
+      pointer-events: auto;
+    }
+    .toast.removing {
+      animation: toastOut .3s ease forwards;
+    }
+    @keyframes toastIn {
+      from {
+        opacity: 0;
+        transform: translateY(16px) scale(.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    @keyframes toastOut {
+      to {
+        opacity: 0;
+        transform: translateY(16px) scale(.95);
+      }
+    }
+    .toast-success {
+      border-left: 3px solid var(--green);
+    }
+    .toast-error {
+      border-left: 3px solid #d9444a;
+    }
+    .toast-info {
+      border-left: 3px solid var(--accent);
+    }
+    .toast-warning {
+      border-left: 3px solid var(--yellow);
+    }
+
+    /* ─── HIDDEN / UTILS ─── */
+    .hidden {
+      display: none !important;
+    }
+
+    /* ─── ADMIN ─── */
+    .admin-bar {
+      background: #fff;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid var(--accent);
+      flex-wrap: wrap;
+      gap: .8rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .admin-bar h2 {
+      font-size: 1.1rem;
+      color: var(--blue-dark);
+    }
+    .admin-btn-group {
+      display: flex;
+      gap: .6rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    @media(max-width:480px) {
+      .stats-row {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .stat-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.3rem;
+      text-align: center;
+      transition: border-color .2s, box-shadow .2s;
+      box-shadow: var(--shadow-sm);
+    }
+    .stat-box:hover {
+      border-color: rgba(59, 125, 216, .5);
+      box-shadow: 0 4px 18px var(--accent-glow);
+    }
+    .stat-num {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+    .stat-label {
+      font-size: .76rem;
+      color: var(--muted);
+      margin-top: .2rem;
+    }
+
+    .tbl-wrap {
+      overflow-x: auto;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 750px;
+    }
+    thead th {
+      background: #f6f9fc;
+      padding: .7rem 1rem;
+      text-align: left;
+      font-size: .72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      border-bottom: 2px solid var(--border);
+    }
+    tbody td {
+      padding: .75rem 1rem;
+      font-size: .83rem;
+      border-bottom: 1px solid #e8edf2;
+      vertical-align: top;
+    }
+    tbody tr:hover {
+      background: #f6fafd;
+    }
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+    .badge {
+      display: inline-block;
+      padding: .14rem .45rem;
+      background: #e8f1fc;
+      color: var(--accent);
+      border-radius: 20px;
+      font-size: .68rem;
+      font-weight: 700;
+      margin: .1rem;
+    }
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: var(--muted-light);
+    }
+    .search-row {
+      display: flex;
+      gap: .8rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.2rem;
+    }
+    .search-row input {
+      flex: 1;
+      min-width: 180px;
+    }
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: .4rem;
+    }
+    .dot-green {
+      background: var(--green);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    .dot-yellow {
+      background: var(--yellow);
+    }
+    @keyframes pulse-dot {
+      0%,
+      100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: .5;
+      }
+    }
+
+    /* ─── IMPORT MODAL ─── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 27, 47, 0.7);
+      z-index: 9000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      animation: fadeInBg .2s ease;
+    }
+    @keyframes fadeInBg {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    .modal-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      width: 100%;
+      max-width: 650px;
+      max-height: 92vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+      animation: slideUp .3s cubic-bezier(.4, 0, .2, 1);
+    }
+    @keyframes slideUp {
+      from {
+        transform: translateY(28px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    .modal-header {
+      padding: 1.3rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-header h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--blue-dark);
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--muted-light);
+      font-size: 1.3rem;
+      cursor: pointer;
+      padding: .2rem;
+      line-height: 1;
+      transition: color .2s;
+    }
+    .modal-close:hover {
+      color: var(--text);
+    }
+    .modal-body {
+      padding: 1.5rem;
+    }
+    .modal-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+      gap: .7rem;
+      flex-wrap: wrap;
+    }
+
+    /* Drop zone */
+    .drop-zone {
+      border: 2px dashed #b8d0e8;
+      border-radius: 10px;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all .2s;
+      margin-bottom: 1rem;
+      position: relative;
+      background: #fafcfd;
+    }
+    .drop-zone:hover,
+    .drop-zone.drag-over {
+      border-color: var(--accent);
+      background: #e8f1fc;
+    }
+    .drop-zone input[type=file] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+    .drop-zone .drop-icon {
+      font-size: 2.8rem;
+      margin-bottom: .5rem;
+    }
+    .drop-zone p {
+      color: var(--muted);
+      font-size: .87rem;
+    }
+    .drop-zone strong {
+      color: var(--accent);
+    }
+    .or-divider {
+      text-align: center;
+      color: var(--muted-light);
+      font-size: .8rem;
+      margin: 1rem 0;
+      position: relative;
+    }
+    .or-divider::before,
+    .or-divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 44%;
+      height: 1px;
+      background: var(--border);
+    }
+    .or-divider::before {
+      left: 0;
+    }
+    .or-divider::after {
+      right: 0;
+    }
+    textarea.csv-input {
+      width: 100%;
+      padding: .75rem 1rem;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: .82rem;
+      font-family: 'Cascadia Code', 'Consolas', monospace;
+      min-height: 140px;
+      resize: vertical;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    textarea.csv-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    .import-stats {
+      display: flex;
+      gap: .8rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    .import-stat {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: .55rem .9rem;
+      text-align: center;
+    }
+    .import-stat-num {
+      font-size: 1.35rem;
+      font-weight: 800;
+    }
+    .import-stat-label {
+      font-size: .7rem;
+      color: var(--muted);
+    }
+    .import-stat.s-total .import-stat-num {
+      color: var(--accent);
+    }
+    .import-stat.s-new .import-stat-num {
+      color: var(--green);
+    }
+    .import-stat.s-dup .import-stat-num {
+      color: var(--yellow);
+    }
+
+    .preview-table-wrap {
+      overflow-x: auto;
+      max-height: 280px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .preview-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 500px;
+    }
+    .preview-table th {
+      background: #f6f9fc;
+      padding: .5rem .75rem;
+      text-align: left;
+      font-size: .7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+    }
+    .preview-table td {
+      padding: .5rem .75rem;
+      font-size: .8rem;
+      border-bottom: 1px solid #e8edf2;
+    }
+    .preview-table tr.is-dup td {
+      opacity: .45;
+      background: rgba(212, 160, 23, .04);
+    }
+
+    .upload-progress-wrap {
+      text-align: center;
+      padding: 1.5rem 0;
+    }
+    .upload-icon {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      animation: uploadPulse 1.2s ease-in-out infinite;
+    }
+    @keyframes uploadPulse {
+      0%,
+      100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.08);
+      }
+    }
+    .upload-progress-track {
+      height: 9px;
+      background: var(--border);
+      border-radius: 9px;
+      overflow: hidden;
+      margin: 1rem 0;
+    }
+    .upload-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--blue-soft));
+      border-radius: 9px;
+      transition: width .4s ease;
+    }
+    .upload-status-text {
+      color: var(--text);
+      font-size: .9rem;
+      font-weight: 600;
+    }
+    .upload-count-text {
+      font-size: .8rem;
+      color: var(--muted);
+      margin-top: .4rem;
+    }
+
+    /* Admin trigger */
+    #adminTrigger {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      background: rgba(255, 255, 255, .7);
+      color: var(--muted-light);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: .4rem .75rem;
+      font-size: .72rem;
+      cursor: pointer;
+      transition: all .2s;
+      z-index: 99;
+      backdrop-filter: blur(6px);
+    }
+    #adminTrigger:hover {
+      background: rgba(255, 255, 255, .9);
+      color: var(--accent);
+      border-color: var(--accent);
+      box-shadow: var(--shadow-sm);
+    }
+
+    @media(max-width:480px) {
+      .wrap {
+        padding: 1.5rem .75rem 5rem;
+      }
+      .tab-panel {
+        padding: 1.4rem;
+      }
+      .admin-bar {
+        padding: .75rem 1rem;
+      }
+      .modal-body {
+        padding: 1rem;
+      }
+      .modal-header,
+      .modal-footer {
+        padding: 1rem;
+      }
+      .site-header h1 {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Decorative Background Shapes -->
+  <div class="bg-decoration circle-1"></div>
+  <div class="bg-decoration circle-2"></div>
+  <div class="bg-decoration square-1"></div>
+
+  <!-- Toast Container -->
+  <div id="toastContainer"></div>
+  <!-- Confetti Canvas -->
+  <canvas id="confettiCanvas" style="position:fixed;top:0;left:0;pointer-events:none;z-index:9999;width:100%;height:100%"></canvas>
+
+  <!-- ══════════════ REGISTER SECTION ══════════════ -->
+  <div id="secRegister">
+    <header class="site-header">
+      <div class="header-illustration">📐📚💡</div>
+      <div class="logo-row">
+        <span class="logo-icon">🎓</span>
+        <span class="logo-icon secondary">🏛️</span>
+      </div>
+      <h1>Turma 2 de Engenharia Informática 2026</h1>
+      <p class="subtitle">Formulário de Cadastro dos Estudantes</p>
+      <div class="badge-ur">📍 Universidade Rovuma — Nampula, Moçambique</div>
+    </header>
+
+    <div class="wrap">
+      <!-- Progress Bar -->
+      <div class="progress-container">
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="progress-steps">
+          <span class="progress-step-label active" id="psl1">📋 Dados Pessoais</span>
+          <span class="progress-step-label" id="psl2">📚 Cadeiras</span>
+          <span class="progress-step-label" id="psl3">🏫 Ano & Confirmar</span>
+        </div>
+      </div>
+
+      <div class="tab-card">
+        <!-- Tab Nav -->
+        <div class="tab-nav" id="tabNav">
+          <button class="tab-btn active" id="tabBtn1" onclick="tryGoTab(1)">
+            <div class="tab-num" id="tn1">1</div>
+            <span class="tab-lbl">Pessoal</span>
+          </button>
+          <div class="tab-divider"></div>
+          <button class="tab-btn" id="tabBtn2" onclick="tryGoTab(2)" disabled>
+            <div class="tab-num" id="tn2">2</div>
+            <span class="tab-lbl">Cadeiras</span>
+          </button>
+          <div class="tab-divider"></div>
+          <button class="tab-btn" id="tabBtn3" onclick="tryGoTab(3)" disabled>
+            <div class="tab-num" id="tn3">3</div>
+            <span class="tab-lbl">Ano</span>
+          </button>
+        </div>
+
+        <!-- ── Panel 1: Dados Pessoais ── -->
+        <div class="tab-panel active" id="panel1">
+          <div class="panel-illustration">👤📝</div>
+          <div class="panel-title">📋 Informações Pessoais</div>
+          <div class="form-row">
+            <label class="field-label">Nome Completo <span class="req">*</span></label>
+            <input type="text" id="fNome" placeholder="Digite o seu nome completo" autocomplete="name"
+            oninput="rtValidateNome()" onblur="rtValidateNome()">
+            <div class="err-msg" id="errNome">Insira o nome completo (mínimo 3 caracteres).</div>
+          </div>
+          <div class="two-col">
+            <div class="form-row">
+              <label class="field-label">Telefone Principal <span class="req">*</span></label>
+              <input type="tel" id="fTel1" placeholder="84 XXX XXXX"
+              oninput="formatPhone(this); rtValidateTel1()" onblur="rtValidateTel1()">
+              <div class="err-msg" id="errTel1">Insira um número de telefone válido (mín. 7 dígitos).</div>
+            </div>
+            <div class="form-row">
+              <label class="field-label">Número Alternativo <span class="opt">(Opcional)</span></label>
+              <input type="tel" id="fTel2" placeholder="85 XXX XXXX" oninput="formatPhone(this)">
+            </div>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Bairro <span class="opt">(Opcional)</span></label>
+            <input type="text" id="fBairro" placeholder="Ex: Muatala, Napipine, Mutauanha…">
+          </div>
+          <div class="form-row">
+            <label class="field-label">Email Address <span class="req">*</span></label>
+            <input type="email" id="fEmail" placeholder="seuemail@exemplo.com" autocomplete="email"
+            oninput="rtValidateEmail()" onblur="rtValidateEmail()">
+            <div class="err-msg" id="errEmail">Insira um endereço de email válido.</div>
+          </div>
+          <div class="alert alert-danger" id="alertDup">⚠️ Já existe um cadastro com este nome e número de telefone!</div>
+          <div class="alert alert-info" id="alertChecking"><span class="spinner"></span>&nbsp; A verificar duplicados…</div>
+          <div class="btn-row btn-row-right">
+            <button class="btn btn-primary" id="btnNext1" onclick="goTab1to2()">Próximo →</button>
+          </div>
+        </div>
+
+        <!-- ── Panel 2: Cadeiras ── -->
+        <div class="tab-panel" id="panel2">
+          <div class="panel-illustration">📖✏️</div>
+          <div class="panel-title">📚 Cadeiras que Frequenta</div>
+          <div class="subjects-header">
+            <span id="subsCounter" class="subjects-counter">0 de 6 selecionadas</span>
+            <button class="link-btn" onclick="toggleAll()">✓ Marcar todas</button>
+          </div>
+          <div class="subject-list" id="subjectsList"></div>
+          <div class="err-msg" id="errSubs" style="margin-top:.6rem">Selecione pelo menos uma cadeira.</div>
+          <div class="btn-row">
+            <button class="btn btn-ghost" onclick="goTab(1)">← Anterior</button>
+            <button class="btn btn-primary" onclick="goTab2to3()">Próximo →</button>
+          </div>
+        </div>
+
+        <!-- ── Panel 3: Ano ── -->
+        <div class="tab-panel" id="panel3">
+          <div class="panel-illustration">🏫🎯</div>
+          <div class="panel-title">🏫 Ano da Faculdade</div>
+          <p style="color:var(--muted);font-size:.86rem;margin-bottom:1.2rem">Como não está a frequentar todas as cadeiras, em que ano curricular se encontra?</p>
+          <div class="year-grid">
+            <button class="year-card" onclick="pickYear(this,2)">📘 2º Ano</button>
+            <button class="year-card" onclick="pickYear(this,3)">📙 3º Ano</button>
+            <button class="year-card" onclick="pickYear(this,4)">📗 4º Ano</button>
+            <button class="year-card" onclick="pickYear(this,5)">📕 5º Ano</button>
+          </div>
+          <div class="err-msg" id="errYear" style="margin-top:.8rem">Por favor, selecione o seu ano.</div>
+          <div class="btn-row">
+            <button class="btn btn-ghost" onclick="goTab(2)">← Anterior</button>
+            <button class="btn btn-primary" onclick="goToConfirmPanel()">Próximo →</button>
+          </div>
+        </div>
+
+        <!-- ── Panel Confirm ── -->
+        <div class="tab-panel" id="panelConfirm">
+          <div class="panel-illustration">✅🔍</div>
+          <div class="panel-title">✅ Confirmar Dados</div>
+          <p style="color:var(--muted);font-size:.86rem;margin-bottom:1.2rem">Verifique os seus dados antes de finalizar o cadastro.</p>
+          <div class="confirm-summary" id="confirmSummary"></div>
+          <div class="btn-row">
+            <button class="btn btn-ghost" onclick="goBackFromConfirm()">← Editar</button>
+            <button class="btn btn-green" id="btnFinalizar" onclick="finalSubmit()">
+              <span id="finSpinner" class="spinner hidden"></span>
+              ✓ Confirmar Cadastro
+            </button>
+          </div>
+        </div>
+
+        <!-- ── Panel Success ── -->
+        <div class="tab-panel" id="panelSuccess">
+          <div class="success-wrap">
+            <div class="success-icon">🎉</div>
+            <h2>Cadastro Realizado com Sucesso!</h2>
+            <p>O seu registo foi guardado na <strong>Turma 2 de Engenharia Informática 2026</strong>.</p>
+            <div class="success-illustrations">
+              <span>📚</span><span>💪</span><span>🏆</span>
+            </div>
+            <div class="motto">✨ "Vamos terminar essa Engenharia por Bem ou por Mal" ✨</div>
+            <p style="color:var(--muted)">Boa sorte no semestre! Que venham muitas conquistas. 🚀</p>
+            <div style="margin-top:1.8rem;display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap">
+              <button class="btn btn-green" onclick="resetForm()">+ Novo Cadastro</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ ADMIN LOGIN ══════════════ -->
+  <div id="secAdminLogin" class="hidden">
+    <header class="site-header">
+      <div class="logo-row">
+        <span class="logo-icon">🔐</span>
+      </div>
+      <h1>Área Administrativa</h1>
+      <p class="subtitle">Turma 2 de Engenharia Informática 2026</p>
+    </header>
+    <div class="wrap" style="max-width:440px;padding-top:2rem">
+      <div class="tab-card">
+        <div class="tab-panel active">
+          <div class="panel-illustration">🛡️</div>
+          <div class="panel-title">🔑 Acesso Restrito</div>
+          <p style="color:var(--muted);font-size:.86rem;margin-bottom:1.3rem">
+            Apenas o <strong>chefe de turma</strong> tem acesso a esta área.<br>
+            <span style="font-size:.78rem;color:var(--muted-light)">Não é necessário nome de utilizador — apenas a senha.</span>
+          </p>
+          <div class="form-row">
+            <label class="field-label">Senha de Administrador <span class="req">*</span></label>
+            <input type="password" id="fAdminPwd" placeholder="Digite a senha" onkeydown="if(event.key==='Enter') doLogin()">
+            <div class="err-msg" id="errLogin">Senha incorrecta. Tente novamente.</div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-ghost" onclick="showRegister()">← Voltar</button>
+            <button class="btn btn-primary" onclick="doLogin()">🔓 Entrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ ADMIN PANEL ══════════════ -->
+  <div id="secAdmin" class="hidden">
+    <div class="admin-bar">
+      <h2>📊 Painel do Chefe — Turma 2 · EI 2026</h2>
+      <div class="admin-btn-group">
+        <button class="btn btn-blue btn-sm" onclick="openImportModal()">⬆ Importar CSV</button>
+        <button class="btn btn-primary btn-sm" onclick="exportCSV()">⬇ Exportar CSV</button>
+        <button class="btn btn-ghost btn-sm" onclick="refreshAdmin()">↺ Atualizar</button>
+        <button class="btn btn-ghost btn-sm" onclick="doLogout()">🚪 Sair</button>
+      </div>
+    </div>
+    <div class="wrap" style="max-width:1150px;padding-top:1.5rem">
+      <div id="connectionStatus" class="hidden" style="margin-bottom:1.2rem;font-size:.83rem;color:var(--muted)"></div>
+      <div class="stats-row" id="adminStats"></div>
+      <div class="tab-card" style="padding:1.5rem">
+        <div class="panel-title">📋 Lista de Estudantes</div>
+        <div class="search-row">
+          <input type="text" id="searchBox" placeholder="🔍  Pesquisar por nome, telefone, bairro ou email…" oninput="renderTable()">
+          <button class="btn btn-danger-sm btn-sm" onclick="confirmClear()" style="white-space:nowrap">🗑 Limpar Tudo</button>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr><th>#</th><th>Nome</th><th>Tel. Principal</th><th>Tel. Alt.</th><th>Bairro</th><th>Email</th><th>Cadeiras</th><th>Ano</th><th>Data</th><th></th></tr>
+            </thead>
+            <tbody id="studentsBody"></tbody>
+          </table>
+        </div>
+        <div class="empty-state hidden" id="emptyState">
+          <div style="font-size:3rem">📭</div>
+          <p style="margin-top:.5rem">Nenhum estudante cadastrado ainda.</p>
+          <p style="font-size:.78rem;color:var(--muted-light)">Os cadastros aparecerão aqui à medida que forem sendo feitos.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ IMPORT MODAL ══════════════ -->
+  <div id="importModal" class="modal-overlay hidden">
+    <div class="modal-box">
+
+      <!-- Step 1: Input CSV -->
+      <div id="importStep1">
+        <div class="modal-header">
+          <h3>⬆ Importar Estudantes por CSV</h3>
+          <button class="modal-close" onclick="closeImportModal()">✕</button>
+        </div>
+        <div class="modal-body">
+          <p style="color:var(--muted);font-size:.85rem;margin-bottom:1.2rem">
+            Importe estudantes a partir de um ficheiro CSV exportado pelo sistema.<br>
+            <strong style="color:var(--text)">A deduplicação é feita por Email</strong> — registos com email já existente são ignorados.
+          </p>
+          <div class="drop-zone" id="dropZone">
+            <input type="file" id="csvFileInput" accept=".csv,.txt" onchange="handleFileSelect(event)">
+            <div class="drop-icon">📂</div>
+            <p><strong>Arraste e solte</strong> o ficheiro CSV aqui</p>
+            <p style="font-size:.78rem;margin-top:.3rem">ou clique para selecionar o ficheiro</p>
+          </div>
+          <div class="or-divider">ou cole o CSV directamente</div>
+          <textarea class="csv-input" id="csvTextarea" rows="6"
+          placeholder="#,Nome,Tel. Principal,Tel. Alternativo,Bairro,Email,Cadeiras,Ano,Data&#10;1,&quot;João Silva&quot;,&quot;84 123 4567&quot;,&quot;&quot;,&quot;Muatala&quot;,&quot;joao@email.com&quot;,&quot;ALGA; AM1; F1&quot;,&quot;1º Ano (Completo)&quot;,&quot;01/01/2026&quot;"></textarea>
+          <p id="fileLoadedMsg" style="color:var(--green);font-size:.8rem;margin-top:.5rem;display:none"></p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" onclick="closeImportModal()">Cancelar</button>
+          <button class="btn btn-blue" onclick="parseImportCSV()">Analisar CSV →</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Preview -->
+      <div id="importStep2" class="hidden">
+        <div class="modal-header">
+          <h3>👁 Pré-visualização da Importação</h3>
+          <button class="modal-close" onclick="closeImportModal()">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="import-stats" id="importStatsBox"></div>
+          <div class="preview-table-wrap">
+            <table class="preview-table">
+              <thead>
+                <tr><th>Estado</th><th>Nome</th><th>Email</th><th>Telefone</th><th>Cadeiras</th><th>Ano</th></tr>
+              </thead>
+              <tbody id="previewBody"></tbody>
+            </table>
+          </div>
+          <p style="color:var(--muted);font-size:.78rem;margin-top:.75rem">
+            Registos marcados como <span style="color:var(--yellow)">Duplicado</span> não serão importados (email já existe na base de dados).
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" onclick="showImportStep(1)">← Voltar</button>
+          <button class="btn btn-green" id="btnConfirmImport" onclick="confirmImport()">
+            ✓ Importar <span id="importCountLabel">0</span> Registos
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 3: Upload Progress -->
+      <div id="importStep3" class="hidden">
+        <div class="modal-header">
+          <h3>⏫ A Importar…</h3>
+        </div>
+        <div class="modal-body">
+          <div class="upload-progress-wrap">
+            <div class="upload-icon">📡</div>
+            <div id="uploadStatusText" class="upload-status-text">A preparar…</div>
+            <div class="upload-progress-track">
+              <div class="upload-progress-fill" id="uploadProgressBar" style="width:0%"></div>
+            </div>
+            <div id="uploadCountText" class="upload-count-text"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Admin Trigger -->
+  <button id="adminTrigger" onclick="showAdminLogin()" title="Administração">⚙ Admin</button>
+
+  <!-- ══════════════ JAVASCRIPT ══════════════ -->
+  <script>
+    // ─────────────────────────────────────────
+    // CONSTANTS & STATE
+    // ─────────────────────────────────────────
+    const ADMIN_PASS = 'Info2026admin';
+    const LOCAL_KEY = 'ei2026_local_v3';
+    const URL_KEY = 'ei2026_sheetdb_url';
+    const DEFAULT_URL = 'https://sheetdb.io/api/v1/yt4jukgmge98t';
+
+    let chosenYear = null;
+    let isLoggedIn = false;
+    let tabDone = [false, false, false];
+    let importState = { parsed: [], newRecords: [], dupsCount: 0 };
+
+    const SUBJECTS = [
+      { name: 'Álgebra Linear e Geometria Analítica', code: 'ALGA' },
+      { name: 'Análise Matemática 1', code: 'AM1' },
+      { name: 'Física 1', code: 'F1' },
+      { name: 'Inglês Técnico', code: 'IT' },
+      { name: 'Introdução à Informática', code: 'II' },
+      { name: 'Metodologia de Estudo e Investigação Científica', code: 'MEIC' },
+    ];
+
+    // ─────────────────────────────────────────
+    // STORAGE HELPERS
+    // ─────────────────────────────────────────
+    function getUrl() { try { return localStorage.getItem(URL_KEY) || DEFAULT_URL; } catch (e) { return DEFAULT_URL; } }
+
+    function localGet() { try { return JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]'); } catch (e) { return []; } }
+
+    function localSet(d) { try { localStorage.setItem(LOCAL_KEY, JSON.stringify(d)); } catch (e) {} }
+
+    function rowToStudent(r) {
+      return {
+        id: r['ID'] || '',
+        nome: r['Nome'] || '',
+        tel1: r['Tel. Principal'] || '',
+        tel2: r['Tel. Alternativo'] || '',
+        bairro: r['Bairro'] || '',
+        email: r['Email'] || '',
+        cadeiras: String(r['Cadeiras'] || '').split(/[,;]/).map(s => s.trim()).filter(Boolean).map(c => ({ code: c })),
+        ano: r['Ano'] || '',
+        data: r['Data de Registo'] || ''
+      };
+    }
+
+    function studentToRow(s) {
+      return {
+        'ID': String(s.id),
+        'Nome': s.nome,
+        'Tel. Principal': s.tel1,
+        'Tel. Alternativo': s.tel2 || '',
+        'Bairro': s.bairro || '',
+        'Email': s.email,
+        'Cadeiras': (s.cadeiras || []).map(c => c.code).join(', '),
+        'Ano': s.ano || '',
+        'Data de Registo': s.data || ''
+      };
+    }
+
+    // ─────────────────────────────────────────
+    // API CALLS
+    // ─────────────────────────────────────────
+    async function apiAdd(student) {
+      const url = getUrl(); if (!url) return false;
+      try {
+        const r = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ data: [studentToRow(student)] })
+        });
+        const j = await r.json();
+        return j.created > 0;
+      } catch (e) { return false; }
+    }
+
+    async function apiFetch() {
+      const url = getUrl(); if (!url) return null;
+      try {
+        const r = await fetch(url);
+        const j = await r.json();
+        if (Array.isArray(j)) return j.map(rowToStudent);
+        return null;
+      } catch (e) { return null; }
+    }
+
+    async function apiCheckDuplicate(nome, tel1) {
+      const url = getUrl(); if (!url) return false;
+      try {
+        const r = await fetch(
+          `${url}/search?Nome=${encodeURIComponent(nome)}&Tel. Principal=${encodeURIComponent(tel1)}`);
+        const j = await r.json();
+        return Array.isArray(j) && j.length > 0;
+      } catch (e) { return false; }
+    }
+
+    async function apiDelete(id) {
+      const url = getUrl(); if (!url) return false;
+      try {
+        const r = await fetch(`${url}/ID/${encodeURIComponent(id)}`, { method: 'DELETE' });
+        const j = await r.json();
+        return j.deleted > 0;
+      } catch (e) { return false; }
+    }
+
+    // ─────────────────────────────────────────
+    // TOAST SYSTEM
+    // ─────────────────────────────────────────
+    function showToast(msg, type = 'info', duration = 3800) {
+      const c = document.getElementById('toastContainer');
+      const t = document.createElement('div');
+      t.className = `toast toast-${type}`;
+      const icons = { success: '✅', error: '❌', info: 'ℹ️', warning: '⚠️' };
+      t.innerHTML = `<span>${icons[type] || 'ℹ️'}</span><span>${msg}</span>`;
+      c.appendChild(t);
+      setTimeout(() => {
+        t.classList.add('removing');
+        setTimeout(() => t.remove(), 300);
+      }, duration);
+    }
+
+    // ─────────────────────────────────────────
+    // CONFETTI
+    // ─────────────────────────────────────────
+    function launchConfetti() {
+      const canvas = document.getElementById('confettiCanvas');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      const ctx = canvas.getContext('2d');
+      const colors = ['#3b7dd8', '#5b9bd5', '#2ea043', '#d4a017', '#1a4b7a', '#7ab8f0', '#0f2b4f', '#c8950b',
+      '#4da6e8'];
+      const pieces = Array.from({ length: 140 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * -canvas.height * .5,
+        w: Math.random() * 14 + 5,
+        h: Math.random() * 7 + 3,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        rotation: Math.random() * Math.PI * 2,
+        speedX: Math.random() * 4 - 2,
+        speedY: Math.random() * 5 + 2.5,
+        rotSpeed: Math.random() * .12 - .06,
+        opacity: 1
+      }));
+      let frame = 0;
+      (function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let alive = false;
+        pieces.forEach(p => {
+          p.x += p.speedX;
+          p.y += p.speedY;
+          p.rotation += p.rotSpeed;
+          if (frame > 90) p.opacity = Math.max(0, p.opacity - .016);
+          if (p.opacity > 0) alive = true;
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rotation);
+          ctx.globalAlpha = p.opacity;
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          ctx.restore();
+        });
+        frame++;
+        if (alive) requestAnimationFrame(animate);
+        else ctx.clearRect(0, 0, canvas.width, canvas.height);
+      })();
+    }
+
+    // ─────────────────────────────────────────
+    // INIT
+    // ─────────────────────────────────────────
+    (function init() {
+      const ul = document.getElementById('subjectsList');
+      ul.innerHTML = SUBJECTS.map((s, i) =>
+        `<label class="subject-row" id="sr${i}" for="cb${i}">
+           <input type="checkbox" id="cb${i}" onchange="styleRow(${i}); updateCounter()">
+           <span class="subject-name">${s.name}</span>
+           <span class="subject-code">${s.code}</span>
+         </label>`
+      ).join('');
+      updateProgress(1);
+      setupDragDrop();
+    })();
+
+    function styleRow(i) {
+      document.getElementById('sr' + i).classList.toggle('checked', document.getElementById('cb' + i).checked);
+    }
+
+    function updateCounter() {
+      const n = selSubs().length;
+      const el = document.getElementById('subsCounter');
+      el.textContent = `${n} de ${SUBJECTS.length} selecionada${n !== 1 ? 's' : ''}`;
+      el.classList.toggle('all', n === SUBJECTS.length);
+    }
+
+    function toggleAll() {
+      const any = SUBJECTS.some((_, i) => !document.getElementById('cb' + i).checked);
+      SUBJECTS.forEach((_, i) => { document.getElementById('cb' + i).checked = any;
+        styleRow(i); });
+      updateCounter();
+    }
+
+    function selSubs() {
+      return SUBJECTS.filter((_, i) => document.getElementById('cb' + i).checked);
+    }
+
+    // ─────────────────────────────────────────
+    // PROGRESS BAR
+    // ─────────────────────────────────────────
+    function updateProgress(step) {
+      const pct = { 1: '15%', 2: '50%', 3: '75%', 4: '100%' };
+      document.getElementById('progressFill').style.width = pct[step] || '100%';
+      ['psl1', 'psl2', 'psl3'].forEach((id, i) => {
+        const el = document.getElementById(id);
+        el.classList.remove('active', 'done');
+        if (i + 1 < step) el.classList.add('done');
+        else if (i + 1 === step) el.classList.add('active');
+      });
+    }
+
+    // ─────────────────────────────────────────
+    // TAB NAVIGATION
+    // ─────────────────────────────────────────
+    function goTab(n) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('panel' + n).classList.add('active');
+      [1, 2, 3].forEach(i => {
+        const btn = document.getElementById('tabBtn' + i);
+        const num = document.getElementById('tn' + i);
+        btn.classList.remove('active', 'done');
+        if (i === n) { btn.classList.add('active');
+          num.textContent = i; } else if (tabDone[i - 1]) { btn.classList.add('done');
+          num.textContent = '✓';
+          btn.disabled = false; } else { num.textContent = i; }
+      });
+      updateProgress(n);
+    }
+
+    function tryGoTab(n) { if (tabDone[n - 1] || n < curTab()) goTab(n); }
+
+    function curTab() {
+      for (let i = 1; i <= 3; i++)
+        if (document.getElementById('panel' + i).classList.contains('active')) return i;
+      return 1;
+    }
+
+    // ─────────────────────────────────────────
+    // REAL-TIME VALIDATION
+    // ─────────────────────────────────────────
+    function rtValidateNome() {
+      const ok = val('fNome').length >= 3;
+      const el = document.getElementById('fNome');
+      el.classList.toggle('field-valid', ok);
+      el.classList.toggle('field-error', !ok && val('fNome').length > 0);
+    }
+
+    function rtValidateTel1() {
+      const ok = val('fTel1').replace(/\D/g, '').length >= 7;
+      const el = document.getElementById('fTel1');
+      el.classList.toggle('field-valid', ok);
+      el.classList.toggle('field-error', !ok && val('fTel1').length > 0);
+    }
+
+    function rtValidateEmail() {
+      const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val('fEmail'));
+      const el = document.getElementById('fEmail');
+      el.classList.toggle('field-valid', ok);
+      el.classList.toggle('field-error', !ok && val('fEmail').length > 0);
+    }
+
+    function formatPhone(input) {
+      let raw = input.value.replace(/[^\d+]/g, '');
+      let prefix = raw.startsWith('+') ? (raw = raw.slice(1), '+') : '';
+      let out = '';
+      if (raw.length > 0) out = raw.slice(0, 2);
+      if (raw.length > 2) out += ' ' + raw.slice(2, 5);
+      if (raw.length > 5) out += ' ' + raw.slice(5, 9);
+      if (raw.length > 9) out += ' ' + raw.slice(9, 12);
+      input.value = prefix + out;
+    }
+
+    function validateP1() {
+      let ok = true;
+      const nomOk = val('fNome').length >= 3;
+      const telOk = val('fTel1').replace(/\D/g, '').length >= 7;
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val('fEmail'));
+      document.getElementById('errNome').classList.toggle('show', !nomOk);
+      document.getElementById('errTel1').classList.toggle('show', !telOk);
+      document.getElementById('errEmail').classList.toggle('show', !emailOk);
+      if (!nomOk) { document.getElementById('fNome').classList.add('field-error');
+        ok = false; }
+      if (!telOk) { document.getElementById('fTel1').classList.add('field-error');
+        ok = false; }
+      if (!emailOk) { document.getElementById('fEmail').classList.add('field-error');
+        ok = false; }
+      return ok;
+    }
+
+    // ─────────────────────────────────────────
+    // FORM FLOW
+    // ─────────────────────────────────────────
+    async function goTab1to2() {
+      hideEl('alertDup');
+      hideEl('alertChecking');
+      if (!validateP1()) return;
+      const nome = val('fNome'),
+        tel1 = val('fTel1');
+      document.getElementById('btnNext1').disabled = true;
+      showEl('alertChecking');
+      let dup = false;
+      if (getUrl()) { dup = await apiCheckDuplicate(nome, tel1); } else { dup = localGet().some(s => s.nome
+          .toLowerCase() === nome.toLowerCase() && s.tel1 === tel1); }
+      hideEl('alertChecking');
+      document.getElementById('btnNext1').disabled = false;
+      if (dup) { showEl('alertDup'); return; }
+      tabDone[0] = true;
+      document.getElementById('tabBtn2').disabled = false;
+      goTab(2);
+      updateProgress(2);
+    }
+
+    function goTab2to3() {
+      hideEl('errSubs');
+      const sel = selSubs();
+      if (!sel.length) { showEl('errSubs'); return; }
+      tabDone[1] = true;
+      if (sel.length === SUBJECTS.length) {
+        chosenYear = '1º Ano (Completo)';
+        tabDone[2] = true;
+        openConfirmPanel();
+      } else {
+        document.getElementById('tabBtn3').disabled = false;
+        goTab(3);
+        updateProgress(3);
+      }
+    }
+
+    function pickYear(btn, yr) {
+      document.querySelectorAll('.year-card').forEach(b => b.classList.remove('picked'));
+      btn.classList.add('picked');
+      chosenYear = yr + 'º Ano';
+      hideEl('errYear');
+    }
+
+    function goToConfirmPanel() {
+      if (!chosenYear) { showEl('errYear'); return; }
+      tabDone[2] = true;
+      openConfirmPanel();
+    }
+
+    function openConfirmPanel() {
+      buildConfirmSummary();
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('panelConfirm').classList.add('active');
+      [1, 2, 3].forEach(i => {
+        const btn = document.getElementById('tabBtn' + i);
+        btn.classList.remove('active', 'done');
+        btn.classList.add('done');
+        document.getElementById('tn' + i).textContent = '✓';
+        btn.disabled = false;
+      });
+      updateProgress(4);
+    }
+
+    function buildConfirmSummary() {
+      const subs = selSubs().map(s => `<span class="badge">${esc(s.code)}</span>`).join(' ');
+      const rows = [
+        { label: 'Nome', value: esc(val('fNome')) },
+        { label: 'Tel. Principal', value: esc(val('fTel1')) },
+        { label: 'Tel. Alternativo', value: val('fTel2') ? esc(val('fTel2')) :
+            '<span style="color:#a0aab4">—</span>' },
+        { label: 'Bairro', value: val('fBairro') ? esc(val('fBairro')) :
+          '<span style="color:#a0aab4">—</span>' },
+        { label: 'Email', value: esc(val('fEmail')) },
+        { label: 'Cadeiras', value: subs },
+        { label: 'Ano Curricular', value: esc(chosenYear || '') },
+      ];
+      document.getElementById('confirmSummary').innerHTML = rows.map(r =>
+        `<div class="confirm-row">
+           <span class="confirm-label">${r.label}</span>
+           <span class="confirm-value">${r.value}</span>
+         </div>`
+      ).join('');
+    }
+
+    function goBackFromConfirm() {
+      if (selSubs().length === SUBJECTS.length) { goTab(2);
+        updateProgress(2); } else { goTab(3);
+        updateProgress(3); }
+    }
+
+    async function finalSubmit() {
+      const btn = document.getElementById('btnFinalizar');
+      const spinner = document.getElementById('finSpinner');
+      btn.disabled = true;
+      spinner.classList.remove('hidden');
+
+      const student = {
+        id: Date.now(),
+        nome: val('fNome'),
+        tel1: val('fTel1'),
+        tel2: val('fTel2'),
+        bairro: val('fBairro'),
+        email: val('fEmail'),
+        cadeiras: selSubs(),
+        ano: chosenYear,
+        data: new Date().toLocaleString('pt-PT')
+      };
+
+      const list = localGet();
+      list.push(student);
+      localSet(list);
+
+      let apiOk = false;
+      if (getUrl()) apiOk = await apiAdd(student);
+
+      btn.disabled = false;
+      spinner.classList.add('hidden');
+
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('panelSuccess').classList.add('active');
+      document.getElementById('tabNav').classList.add('hidden');
+      updateProgress(4);
+
+      setTimeout(launchConfetti, 300);
+      showToast(apiOk ? 'Cadastro enviado para o Google Sheets ✓' : 'Guardado localmente (sem ligação ao servidor)',
+        apiOk ? 'success' : 'warning');
+    }
+
+    function resetForm() {
+      ['fNome', 'fTel1', 'fTel2', 'fBairro', 'fEmail'].forEach(id => {
+        const el = document.getElementById(id);
+        el.value = '';
+        el.classList.remove('field-valid', 'field-error');
+      });
+      chosenYear = null;
+      tabDone = [false, false, false];
+      SUBJECTS.forEach((_, i) => { document.getElementById('cb' + i).checked = false;
+        styleRow(i); });
+      document.querySelectorAll('.year-card').forEach(b => b.classList.remove('picked'));
+      ['alertDup', 'alertChecking', 'errNome', 'errTel1', 'errEmail', 'errSubs', 'errYear'].forEach(hideEl);
+      document.getElementById('tabNav').classList.remove('hidden');
+      [1, 2, 3].forEach(i => {
+        const btn = document.getElementById('tabBtn' + i);
+        btn.classList.remove('active', 'done');
+        document.getElementById('tn' + i).textContent = i;
+        btn.disabled = (i !== 1);
+      });
+      document.getElementById('tabBtn1').classList.add('active');
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('panel1').classList.add('active');
+      updateCounter();
+      updateProgress(1);
+    }
+
+    // ─────────────────────────────────────────
+    // HELPERS
+    // ─────────────────────────────────────────
+    function val(id) { return document.getElementById(id).value.trim(); }
+
+    function showEl(id) { const e = document.getElementById(id);
+      e.classList.add('show');
+      e.classList.remove('hidden'); }
+
+    function hideEl(id) { const e = document.getElementById(id);
+      e.classList.remove('show');
+      e.classList.add('hidden'); }
+
+    function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+    // ─────────────────────────────────────────
+    // ADMIN NAVIGATION
+    // ─────────────────────────────────────────
+    function showRegister() {
+      document.getElementById('secRegister').classList.remove('hidden');
+      document.getElementById('secAdminLogin').classList.add('hidden');
+      document.getElementById('secAdmin').classList.add('hidden');
+    }
+
+    function showAdminLogin() {
+      if (isLoggedIn) { showAdminPanel(); return; }
+      document.getElementById('secRegister').classList.add('hidden');
+      document.getElementById('secAdminLogin').classList.remove('hidden');
+      document.getElementById('secAdmin').classList.add('hidden');
+    }
+
+    function showAdminPanel() {
+      document.getElementById('secRegister').classList.add('hidden');
+      document.getElementById('secAdminLogin').classList.add('hidden');
+      document.getElementById('secAdmin').classList.remove('hidden');
+      renderAdmin();
+    }
+
+    function doLogin() {
+      if (document.getElementById('fAdminPwd').value === ADMIN_PASS) {
+        isLoggedIn = true;
+        document.getElementById('fAdminPwd').value = '';
+        document.getElementById('errLogin').classList.remove('show');
+        showAdminPanel();
+        showToast('Bem-vindo ao painel de administração! 👋', 'success');
+      } else {
+        document.getElementById('errLogin').classList.add('show');
+        showToast('Senha incorrecta', 'error');
+      }
+    }
+
+    function doLogout() {
+      isLoggedIn = false;
+      showRegister();
+      showToast('Sessão terminada', 'info');
+    }
+
+    // ─────────────────────────────────────────
+    // ADMIN RENDER
+    // ─────────────────────────────────────────
+    async function renderAdmin() {
+      const url = getUrl();
+      const status = document.getElementById('connectionStatus');
+      if (url) {
+        status.classList.remove('hidden');
+        status.innerHTML =
+          `<span class="status-dot dot-yellow"></span>A carregar dados do servidor…`;
+        const online = await apiFetch();
+        if (online) {
+          localSet(online);
+          status.innerHTML =
+            `<span class="status-dot dot-green"></span>Ligado ao Google Sheets ✓ — ${online.length} estudante(s) carregados`;
+        } else {
+          status.innerHTML =
+            `<span class="status-dot dot-yellow"></span>Sem ligação ao servidor — a usar dados locais`;
+        }
+      }
+      renderStats();
+      renderTable();
+    }
+    async function refreshAdmin() {
+      await renderAdmin();
+      showToast('Lista atualizada', 'info');
+    }
+
+    function renderStats() {
+      const all = localGet();
+      const full = all.filter(s => s.cadeiras.length === SUBJECTS.length).length;
+      document.getElementById('adminStats').innerHTML = `
+        <div class="stat-box"><div class="stat-num">${all.length}</div><div class="stat-label">📋 Total Cadastrados</div></div>
+        <div class="stat-box"><div class="stat-num">${full}</div><div class="stat-label">🎓 1º Ano Completo</div></div>
+        <div class="stat-box"><div class="stat-num">${all.length - full}</div><div class="stat-label">📖 Cadeiras Parciais</div></div>
+      `;
+    }
+
+    function renderTable() {
+      const q = (document.getElementById('searchBox').value || '').toLowerCase();
+      const rows = localGet().filter(s =>
+        !q ||
+        s.nome.toLowerCase().includes(q) ||
+        s.tel1.includes(q) ||
+        (s.bairro || '').toLowerCase().includes(q) ||
+        s.email.toLowerCase().includes(q)
+      );
+      const tbody = document.getElementById('studentsBody');
+      const empty = document.getElementById('emptyState');
+      if (!rows.length) { tbody.innerHTML = '';
+        empty.classList.remove('hidden'); return; }
+      empty.classList.add('hidden');
+      tbody.innerHTML = rows.map((s, i) =>
+        `<tr>
+          <td style="color:var(--muted)">${i+1}</td>
+          <td><strong>${esc(s.nome)}</strong></td>
+          <td>${esc(s.tel1)}</td>
+          <td>${s.tel2 ? esc(s.tel2) : '<span style="color:#a0aab4">—</span>'}</td>
+          <td>${s.bairro ? esc(s.bairro) : '<span style="color:#a0aab4">—</span>'}</td>
+          <td style="font-size:.78rem">${esc(s.email)}</td>
+          <td>${(s.cadeiras||[]).map(c=>`<span class="badge">${esc(c.code)}</span>`).join('')}</td>
+          <td style="white-space:nowrap">${esc(s.ano||'')}</td>
+          <td style="color:var(--muted);font-size:.76rem;white-space:nowrap">${esc(s.data||'')}</td>
+          <td><button class="btn btn-danger-sm btn-sm" onclick="deleteStudent('${s.id}')">✕</button></td>
+        </tr>`
+      ).join('');
+    }
+    async function deleteStudent(id) {
+      if (!confirm('Remover este estudante?')) return;
+      localSet(localGet().filter(s => String(s.id) !== String(id)));
+      if (getUrl()) await apiDelete(id);
+      renderAdmin();
+      showToast('Estudante removido', 'warning');
+    }
+
+    function confirmClear() {
+      if (!confirm('Apagar TODOS os cadastros?\nEsta acção não pode ser desfeita!')) return;
+      localSet([]);
+      renderStats();
+      renderTable();
+      showToast('Todos os cadastros foram eliminados', 'error');
+    }
+
+    function exportCSV() {
+      const list = localGet();
+      if (!list.length) { showToast('Sem dados para exportar', 'warning'); return; }
+      const cols = ['#', 'Nome', 'Tel. Principal', 'Tel. Alternativo', 'Bairro', 'Email', 'Cadeiras', 'Ano', 'Data'];
+      const rows = list.map((s, i) => [
+        i + 1, s.nome, s.tel1, s.tel2 || '', s.bairro || '', s.email,
+        (s.cadeiras || []).map(c => c.code).join('; '), s.ano || '', s.data || ''
+      ]);
+      const csv = [cols, ...rows].map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+      const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' });
+      Object.assign(document.createElement('a'), {
+        href: URL.createObjectURL(blob),
+        download: 'Turma2_EI2026_Estudantes.csv'
+      }).click();
+      showToast(`CSV exportado com ${list.length} registo(s)`, 'success');
+    }
+
+    // ─────────────────────────────────────────
+    // IMPORT CSV — MODAL
+    // ─────────────────────────────────────────
+    function openImportModal() {
+      document.getElementById('importModal').classList.remove('hidden');
+      showImportStep(1);
+      document.getElementById('csvTextarea').value = '';
+      document.getElementById('fileLoadedMsg').style.display = 'none';
+      const fi = document.getElementById('csvFileInput');
+      fi.value = '';
+    }
+
+    function closeImportModal() {
+      document.getElementById('importModal').classList.add('hidden');
+      importState = { parsed: [], newRecords: [], dupsCount: 0 };
+    }
+
+    function showImportStep(n) {
+      ['importStep1', 'importStep2', 'importStep3'].forEach((id, i) =>
+        document.getElementById(id).classList.toggle('hidden', i + 1 !== n)
+      );
+    }
+
+    function setupDragDrop() {
+      const zone = document.getElementById('dropZone');
+      if (!zone) return;
+      zone.addEventListener('dragover', e => { e.preventDefault();
+        zone.classList.add('drag-over'); });
+      zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+      zone.addEventListener('drop', e => {
+        e.preventDefault();
+        zone.classList.remove('drag-over');
+        const file = e.dataTransfer.files[0];
+        if (file) readCsvFile(file);
+      });
+    }
+
+    function handleFileSelect(e) {
+      const file = e.target.files[0];
+      if (file) readCsvFile(file);
+    }
+
+    function readCsvFile(file) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        document.getElementById('csvTextarea').value = e.target.result;
+        const msg = document.getElementById('fileLoadedMsg');
+        msg.textContent = `✓ Ficheiro "${file.name}" carregado (${(file.size/1024).toFixed(1)} KB)`;
+        msg.style.display = 'block';
+      };
+      reader.readAsText(file, 'UTF-8');
+    }
+
+    function parseCSVLine(line) {
+      const result = [];
+      let current = '',
+        inQ = false;
+      for (let i = 0; i < line.length; i++) {
+        const ch = line[i];
+        if (ch === '"') {
+          if (inQ && line[i + 1] === '"') { current += '"';
+            i++; } else inQ = !inQ;
+        } else if (ch === ',' && !inQ) {
+          result.push(current.trim());
+          current = '';
+        } else {
+          current += ch;
+        }
+      }
+      result.push(current.trim());
+      return result;
+    }
+
+    function parseImportCSV() {
+      const raw = document.getElementById('csvTextarea').value.trim();
+      if (!raw) { showToast('Nenhum dado para analisar', 'warning'); return; }
+
+      const lines = raw.split('\n').filter(l => l.trim());
+      if (lines.length < 2) { showToast('O CSV precisa de cabeçalho + pelo menos 1 linha de dados', 'error'); return; }
+
+      const headers = parseCSVLine(lines[0]).map(h => h.toLowerCase().replace(/[.\s]/g, ''));
+      const hMap = {};
+      headers.forEach((h, i) => {
+        if (h === '#') hMap.num = i;
+        else if (h.includes('nome')) hMap.nome = i;
+        else if (h.includes('principal')) hMap.tel1 = i;
+        else if (h.includes('alternativo') || h.includes('alt')) hMap.tel2 = i;
+        else if (h.includes('bairro')) hMap.bairro = i;
+        else if (h.includes('email')) hMap.email = i;
+        else if (h.includes('cadeira')) hMap.cadeiras = i;
+        else if (h.includes('ano')) hMap.ano = i;
+        else if (h.includes('data')) hMap.data = i;
+      });
+
+      if (hMap.nome === undefined || hMap.email === undefined) {
+        showToast('Colunas "Nome" e "Email" são obrigatórias no CSV', 'error');
+        return;
+      }
+
+      const parsed = [];
+      for (let i = 1; i < lines.length; i++) {
+        const c = parseCSVLine(lines[i]);
+        if (c.length < 2) continue;
+        const nome = (c[hMap.nome] || '').trim();
+        const email = (c[hMap.email] || '').trim();
+        if (!nome || !email) continue;
+        const tel1 = (c[hMap.tel1] || '').trim();
+        const tel2 = (c[hMap.tel2] || '').trim();
+        const bairro = (c[hMap.bairro] || '').trim();
+        const cadeStr = (c[hMap.cadeiras] || '').trim();
+        const ano = (c[hMap.ano] || '').trim();
+        const data = (c[hMap.data] || '').trim();
+        const cadeiras = cadeStr.split(/[,;]/).map(s => s.trim()).filter(Boolean).map(c => ({ code: c }));
+        parsed.push({ id: Date.now() + Math.random(), nome, tel1, tel2, bairro, email, cadeiras, ano, data });
+      }
+
+      if (!parsed.length) { showToast('Nenhum registo válido encontrado no CSV', 'error'); return; }
+
+      const existing = localGet();
+      const existEmails = new Set(existing.map(s => s.email.toLowerCase()));
+      const seenInImport = new Set();
+      const newRecords = [];
+      const dups = [];
+
+      parsed.forEach(s => {
+        const key = s.email.toLowerCase();
+        if (existEmails.has(key) || seenInImport.has(key)) {
+          dups.push(s);
+        } else {
+          seenInImport.add(key);
+          newRecords.push(s);
+        }
+      });
+
+      importState = { parsed, newRecords, dupsCount: dups.length };
+      buildImportPreview(newRecords, dups);
+      showImportStep(2);
+    }
+
+    function buildImportPreview(newRecs, dups) {
+      document.getElementById('importStatsBox').innerHTML = `
+        <div class="import-stat s-total"><div class="import-stat-num">${newRecs.length + dups.length}</div><div class="import-stat-label">Total no CSV</div></div>
+        <div class="import-stat s-new">  <div class="import-stat-num">${newRecs.length}</div><div class="import-stat-label">Novos</div></div>
+        <div class="import-stat s-dup">  <div class="import-stat-num">${dups.length}</div><div class="import-stat-label">Duplicados</div></div>
+      `;
+      document.getElementById('importCountLabel').textContent = newRecs.length;
+      document.getElementById('btnConfirmImport').disabled = newRecs.length === 0;
+
+      const all = [
+        ...newRecs.map(s => ({ ...s, _dup: false })),
+        ...dups.map(s => ({ ...s, _dup: true }))
+      ];
+      document.getElementById('previewBody').innerHTML = all.map(s =>
+        `<tr class="${s._dup ? 'is-dup' : ''}">
+          <td>${s._dup
+            ? '<span style="color:var(--yellow);font-weight:700">↩ Duplicado</span>'
+            : '<span style="color:var(--green);font-weight:700">✓ Novo</span>'}</td>
+          <td>${esc(s.nome)}</td>
+          <td style="font-size:.76rem">${esc(s.email)}</td>
+          <td>${esc(s.tel1)}</td>
+          <td>${(s.cadeiras||[]).map(c=>`<span class="badge">${esc(c.code)}</span>`).join(' ')}</td>
+          <td style="white-space:nowrap">${esc(s.ano)}</td>
+        </tr>`
+      ).join('');
+    }
+
+    async function confirmImport() {
+      const newRecs = importState.newRecords;
+      if (!newRecs.length) { closeImportModal(); return; }
+
+      showImportStep(3);
+
+      const existing = localGet();
+      localSet([...existing, ...newRecs]);
+
+      const url = getUrl();
+      const total = newRecs.length;
+      let sent = 0;
+      const batchSize = 5;
+
+      function updateUI() {
+        const pct = total > 0 ? Math.round((sent / total) * 100) : 0;
+        document.getElementById('uploadProgressBar').style.width = pct + '%';
+        document.getElementById('uploadStatusText').textContent =
+          sent < total ? `A enviar para o servidor… (${pct}%)` : '✅ Importação concluída!';
+        document.getElementById('uploadCountText').textContent =
+          `${sent} de ${total} registo(s) enviado(s)`;
+      }
+      updateUI();
+
+      if (url) {
+        for (let i = 0; i < newRecs.length; i += batchSize) {
+          const batch = newRecs.slice(i, i + batchSize);
+          try {
+            await fetch(url, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ data: batch.map(studentToRow) })
+            });
+          } catch (e) { /* continua mesmo se falhar */ }
+          sent = Math.min(i + batchSize, newRecs.length);
+          updateUI();
+          await new Promise(r => setTimeout(r, 80));
+        }
+      } else {
+        sent = total;
+        updateUI();
+      }
+
+      document.getElementById('uploadStatusText').textContent = '✅ Importação concluída!';
+      document.getElementById('uploadProgressBar').style.width = '100%';
+
+      await new Promise(r => setTimeout(r, 1200));
+      closeImportModal();
+      await renderAdmin();
+      showToast(`🎉 ${total} estudante(s) importado(s) com sucesso!`, 'success', 5000);
+    }
+  </script>
+</body>
+</html>
